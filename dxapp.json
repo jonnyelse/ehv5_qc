@@ -1,0 +1,127 @@
+{
+  "name": "ehv5_qc",
+  "title": "ehv5_qc",
+  "summary": "ExpansionHunter Version 5.0.0 with qc and no bams or jsons",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "reads",
+      "class": "array:string",
+      "optional": false,
+      "help": "",
+      "patterns": [
+        "*.cram"
+      ]
+    },
+    {
+      "name": "reference",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "variant_catalog",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "output_prefix",
+      "class": "array:string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "output_folder",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "sex",
+      "class": "array:string",
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "threads",
+      "class": "int",
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "analysis_mode",
+      "class": "string",
+      "optional": true,
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "vcf",
+      "class": "array:file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "index_vcf",
+      "class": "array:file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+        {"name": "bcftools"},
+        {"name": "tabix"},
+        {"name": "samtools"},
+        {"name": "r-base"},
+        {"name": "jq", "package_manager": "apt"},
+        {"name": "r-bioc-rsamtools", "package_manager": "apt"},
+        {"name": "r-bioc-genomicalignments", "package_manager": "apt"},
+        {"name": "dplyr", "package_manager": "cran"},
+        {"name": "optigrab", "package_manager": "cran"},
+        {"name": "purrr", "package_manager": "cran"},
+        {"name": "jsonlite", "package_manager": "cran"},
+        {"name": "stringr", "package_manager": "cran"},
+        {"name": "tidyr", "package_manager": "cran"},
+        {"name": "data.table", "package_manager": "cran"}
+    ],
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "release": "20.04",
+    "distribution": "Ubuntu",
+    "file": "src/ExpHunterV5.sh",
+    "version": "0",
+    "executionPolicy": 
+      {"restartOn": {"SpotInstanceInterruption": 5}
+    }
+  },
+  "access": {"network": ["*"],
+    "project": "CONTRIBUTE"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x16"
+        }
+      }
+    }
+  }
+}
